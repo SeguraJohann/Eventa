@@ -1,0 +1,29 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Explicit UID allowlist.
+    // Even if someone clones this repo and points it at this instance,
+    // their UID will not be here and every request will be rejected.
+    function isAllowedUser() {
+      return request.auth != null
+          && request.auth.uid in [
+               'REPLACE_WITH_YOUR_UID'
+             ];
+    }
+
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+
+    // All user data lives under users/{uid}.
+    match /users/{userId}/{document=**} {
+      allow read, write: if isOwner(userId) && isAllowedUser();
+    }
+
+    // Deny everything else.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

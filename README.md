@@ -27,12 +27,15 @@ Built on Firebase (Auth, Firestore, Hosting — free Spark plan) with React + Ty
 ### Done
 - Repository created with `.gitignore` (environment files, internal docs and real Firestore rules are excluded)
 - Product decisions: app name **Eventa**, Google sign-in restricted to a single UID (allowlist)
+- Project scaffold: Vite + React + TypeScript (strict), Vitest, oxlint, Firebase config, Firestore rules template with UID allowlist
+- **Recurrence engine** (daily, weekdays, every N days, every N weeks, week cycles; start/end/count; pauses) with tests for the spec scenarios
+- **Subtask tree logic**: unlimited depth, check/uncheck propagation, progress, paste-list parsing, per-occurrence templates
+- **Day agenda logic**: occurrences (moved, skipped, time overrides), placements, side-by-side schedule layout, streaks, completion rate, heatmap
+- **Firestore services**: items, placements, occurrences and day log (batched writes, offline-first)
 - **Firestore data model designed:** `items` (event + embedded subtask tree + embedded recurrence rule), `placements` (put on a day), `occurrences` (deterministic ids, only stored when changed), `days` (day note + completion log); no composite indexes required
 
 ### Pending
-- **Phase 0 — Foundations:** scaffold, folder structure, design tokens, icons, i18n, Firebase + Google Auth, Firestore rules with UID allowlist, responsive layout (tab bar / sidebar)
-- **Persistence services** for the data model
-- **Recurrence engine** (rules, occurrences, exceptions) with tests
+- **UI foundations:** design tokens, icons, i18n, Google sign-in, responsive layout (tab bar / sidebar)
 - **Subtask tree** (view + editor + paste list)
 - **Event form** and recurrence editor
 - **Events list** and adaptive event detail
