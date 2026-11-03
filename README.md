@@ -13,11 +13,11 @@ Built on Firebase (Auth, Firestore, Hosting — free Spark plan) with React + Ty
 | Area | Technology |
 |---|---|
 | Framework | React + TypeScript |
-| Build / PWA | Vite + `vite-plugin-pwa` |
+| Build | Vite |
 | Backend | Firebase (Auth, Firestore, Hosting) |
 | Styles | CSS Modules + design tokens |
-| Dates | `date-fns` + `date-fns-tz` |
-| Forms | `react-hook-form` + Zod |
+| Dates | Own helpers (local `YYYY-MM-DD` keys) |
+| Validation | Zod |
 | Tests | Vitest |
 
 ---
@@ -41,16 +41,20 @@ Built on Firebase (Auth, Firestore, Hosting — free Spark plan) with React + Ty
 - **Single event form** with subtask tree editor (Enter / Tab / Shift+Tab / drag / paste list), when, completion and more options
 - **Modals:** add to day, recurrence editor with preview, put on a day, occurrence actions, edit scope, ⋯ menu, move subtask, past occurrence, delete confirmation, completed prompt, reschedule, day note
 - Unit tests for the day agenda and schedule layout, plus smoke tests that render every screen and modal with sample data (61 tests in total)
+- **Getting started guide** ([GETTING_STARTED.md](GETTING_STARTED.md)): Firebase project, `.env`, rules, hosting and phone install, step by step
+- **Deployed to Firebase Hosting** and verified on desktop and phone (Google sign-in, data saved to Firestore)
 - **Firestore data model designed:** `items` (event + embedded subtask tree + embedded recurrence rule), `placements` (put on a day), `occurrences` (deterministic ids, only stored when changed), `days` (day note + completion log); no composite indexes required
 
 ### Pending
-- Firebase project setup (console), real `.env` values, UID allowlist and rules deploy
 - Manual testing of the spec scenarios in the real app
+- Installable PWA (web app manifest and icons); today the phone install is a home-screen shortcut
 - Mobile polish after testing
 
 ---
 
 ## Setup
+
+Full walkthrough: **[GETTING_STARTED.md](GETTING_STARTED.md)**. Short version:
 
 Requirements: Node.js 20+, a Google account, and the Firebase CLI (`npm install -g firebase-tools`).
 

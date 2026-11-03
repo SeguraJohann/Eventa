@@ -50,3 +50,7 @@ PROGRESS.md
 # Markdown catch-all (README is the only .md that goes up)
 *.md
 !README.md
+!GETTING_STARTED.md
+
+# Local Firebase project link (each user links their own)
+.firebaserc
