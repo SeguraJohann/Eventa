@@ -40,7 +40,7 @@ Built on Firebase (Auth, Firestore, Hosting — free Spark plan) with React + Ty
 - **Event detail:** adaptive view (one-off / repeating / time block), subtask tree with filters, subtask panel, stats, heatmap, exceptions
 - **Single event form** with subtask tree editor (Enter / Tab / Shift+Tab / drag / paste list), when, completion and more options
 - **Modals:** add to day, recurrence editor with preview, put on a day, occurrence actions, edit scope, ⋯ menu, move subtask, past occurrence, delete confirmation, completed prompt, reschedule, day note
-- Unit tests for the day agenda and schedule layout (31 tests in total)
+- Unit tests for the day agenda and schedule layout, plus smoke tests that render every screen and modal with sample data (61 tests in total)
 - **Firestore data model designed:** `items` (event + embedded subtask tree + embedded recurrence rule), `placements` (put on a day), `occurrences` (deterministic ids, only stored when changed), `days` (day note + completion log); no composite indexes required
 
 ### Pending

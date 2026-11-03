@@ -15,7 +15,7 @@ export default defineConfig({
     chunkSizeWarningLimit: 1000,
   },
   test: {
-    include: ["src/**/*.test.ts"],
+    include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
     environment: "node",
   },
 });
