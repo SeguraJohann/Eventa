@@ -584,3 +584,17 @@ textarea.inp {
     display: flex !important;
   }
 }
+
+/* Screen that fills the available height (Today, calendar day): inner parts scroll. */
+.fit-screen {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  flex: 1;
+  min-height: 0;
+}
+@media (max-width: 859px) {
+  .fit-screen {
+    gap: 12px;
+  }
+}

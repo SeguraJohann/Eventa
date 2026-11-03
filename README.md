@@ -41,7 +41,7 @@ Built on Firebase (Auth, Firestore, Hosting — free Spark plan) with React + Ty
 - **Single event form** with subtask tree editor (Enter / Tab / Shift+Tab / drag / paste list), when, completion and more options
 - **Modals:** add to day, recurrence editor with preview, put on a day, occurrence actions, edit scope, ⋯ menu, move subtask, past occurrence, delete confirmation, completed prompt, reschedule, day note
 - Unit tests for the day agenda and schedule layout, plus smoke tests that render every screen and modal with sample data (61 tests in total)
-- **Today fits the screen:** the schedule scrolls inside its own card instead of the whole page (lists on top take up to ~40% on mobile)
+- **Today and the calendar day view fit the screen:** the schedule scrolls inside its own card instead of the whole page (lists on top take up to ~40% on mobile); when today is shown, the schedule opens scrolled to the current time
 - **Subtask editor works without a keyboard:** ⇤ / ⇥ level buttons on every row, ＋ adds a subtask inside, tree guide lines and bold parents; guide lines in the detail tree too
 - **Installable on Android/iPhone:** web app manifest (standalone, opens at Today) and app icons
 - **Getting started guide** ([GETTING_STARTED.md](GETTING_STARTED.md)): Firebase project, `.env`, rules, hosting and phone install, step by step

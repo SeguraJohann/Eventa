@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { Fragment, useMemo, type ReactNode } from "react";
 import { useSearchParams } from "react-router-dom";
 import type { DateKey } from "@/types/models";
 import { useAgenda } from "@/features/data/hooks";
@@ -19,6 +19,10 @@ import type { CalendarMode } from "@/routes/paths";
 import styles from "./CalendarScreen.module.css";
 
 const MODES: CalendarMode[] = ["mes", "semana", "dia"];
+
+function FitScreen({ children }: { children: ReactNode }) {
+  return <div className="fit-screen">{children}</div>;
+}
 
 export default function CalendarScreen() {
   const t = useT();
@@ -44,8 +48,9 @@ export default function CalendarScreen() {
         ? `${dayMonth(startOfWeek(date))} – ${dayMonth(addDays(startOfWeek(date), 6))}`
         : monthYear(date);
 
+  const Wrap = mode === "dia" ? FitScreen : Fragment;
   return (
-    <>
+    <Wrap>
       <header className="top">
         <div>
           <p className="eyebrow desk-only">{t.nav.calendar}</p>
@@ -76,7 +81,7 @@ export default function CalendarScreen() {
       {mode === "mes" && <MonthView date={date} onPick={(d) => go("dia", d)} />}
       {mode === "semana" && <WeekView date={date} onPick={(d) => go("dia", d)} />}
       {mode === "dia" && <DayMode date={date} />}
-    </>
+    </Wrap>
   );
 }
 
@@ -208,5 +213,5 @@ function DayMode({ date }: { date: DateKey }) {
       </button>
     </div>
   );
-  return <DayView date={date} entries={entries} showOverdue={date === today} leftTop={nav} hint={date >= today ? t.calendar.dayHint : undefined} />;
+  return <DayView date={date} entries={entries} showOverdue={date === today} leftTop={nav} hint={date >= today ? t.calendar.dayHint : undefined} fit />;
 }

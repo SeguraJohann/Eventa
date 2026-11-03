@@ -43,6 +43,7 @@ export function AppLayout() {
   );
 
   const path = location.pathname;
+  const fit = path === paths.today || (path === paths.calendar && params.get("modo") === "dia");
   const section = path.startsWith(paths.calendar) ? "calendar" : path.startsWith(paths.events) ? (path === paths.events ? "events" : "detail") : "today";
   const calendarDate = params.get("fecha");
   const selectedDate = section === "calendar" && calendarDate && isValidDateKey(calendarDate) ? calendarDate : today;
@@ -104,7 +105,7 @@ export function AppLayout() {
         </div>
       </nav>
 
-      <main className={`${styles.main} ${path === paths.today ? styles.fit : ""}`}>
+      <main className={`${styles.main} ${fit ? styles.fit : ""}`}>
         <div className={styles.inner}>
           {!online && (
             <div className={styles.offline} role="status">

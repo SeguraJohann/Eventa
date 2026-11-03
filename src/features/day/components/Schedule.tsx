@@ -77,11 +77,14 @@ export function Schedule({ columns, showHeader, compact, fill, onEmptySlot, onEn
     return Math.max(0, Math.floor(min / 60) * 60);
   }, [laid]);
   const scrolledOnce = useRef(false);
+  const showsToday = columns.some((c) => c.date === clock.today);
   useLayoutEffect(() => {
-    if (scrolledOnce.current || !scroller.current) return;
+    const el = scroller.current;
+    if (scrolledOnce.current || !el) return;
     scrolledOnce.current = true;
-    scroller.current.scrollTop = firstMinute * pxPerMin;
-  }, [firstMinute]);
+    // Today: put the current-time line about a third from the top.
+    el.scrollTop = showsToday ? Math.max(0, clock.minutes * pxPerMin - el.clientHeight / 3) : firstMinute * pxPerMin;
+  }, [firstMinute, showsToday, clock.minutes]);
 
   // While dragging on touch screens, stop the page from scrolling.
   useEffect(() => {

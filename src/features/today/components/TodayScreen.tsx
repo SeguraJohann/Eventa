@@ -9,7 +9,6 @@ import { longDate, weekdayName } from "@/lib/date/format";
 import { AddIcon } from "@/components/icons";
 import { ColorDot, Loading } from "@/components/ui/misc";
 import { capitalize, fmt, useT } from "@/i18n";
-import styles from "./Today.module.css";
 
 export function TodayScreen() {
   const t = useT();
@@ -21,7 +20,7 @@ export function TodayScreen() {
   const summary = daySummary(entries);
 
   return (
-    <div className={styles.screen}>
+    <div className="fit-screen">
       <header className="top">
         <div>
           <p className="eyebrow">{fmt(t.today.eyebrow, { weekday: capitalize(weekdayName(today)) })}</p>
