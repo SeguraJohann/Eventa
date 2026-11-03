@@ -1,0 +1,52 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+build/
+coverage/
+
+# Environment variables — never committed
+.env
+.env.*
+!.env.example
+
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+
+# Real rules contain the UID — keep local only
+firestore.rules
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.sw?
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude Code local config
+.claude/
+
+# Internal docs — never pushed to the repo
+docs/
+Especificaciones/
+CLAUDE.md
+PROGRESS.md
+
+# Markdown catch-all (README is the only .md that goes up)
+*.md
+!README.md
