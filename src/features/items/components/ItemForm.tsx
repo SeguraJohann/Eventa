@@ -136,8 +136,16 @@ export function ItemForm({ item, preset, fromOccurrence, onClose }: Props) {
   }, [draft, t]);
 
   const setScheduleMode = (mode: ItemDraft["scheduleMode"]) => {
-    if (mode === "repeat" && !draft.recurrence) patch({ scheduleMode: mode, recurrence: defaultRule(preset?.date ?? today) });
-    else patch({ scheduleMode: mode });
+    if (mode === "repeat" && !draft.recurrence) {
+      // Carry the time picked in the schedule (first day) over to the rule.
+      const first = draft.days[0];
+      const timed = first?.timeMode === "timed" && draft.timeMode === "none";
+      patch({
+        scheduleMode: mode,
+        recurrence: defaultRule(first?.date ?? preset?.date ?? today),
+        ...(timed ? { timeMode: "timed" as const, startTime: first.startTime, endTime: first.endTime } : {}),
+      });
+    } else patch({ scheduleMode: mode });
   };
 
   const addDay = () =>

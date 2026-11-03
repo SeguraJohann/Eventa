@@ -40,6 +40,7 @@ Built on Firebase (Auth, Firestore, Hosting — free Spark plan) with React + Ty
 - **Event detail:** adaptive view (one-off / repeating / time block), subtask tree with filters, subtask panel, stats, heatmap, exceptions
 - **Single event form** with subtask tree editor (Enter / Tab / Shift+Tab / drag / paste list), when, completion and more options
 - **Modals:** add to day, recurrence editor with preview, put on a day, occurrence actions, edit scope, ⋯ menu, move subtask, past occurrence, delete confirmation, completed prompt, reschedule, day note
+- Unit tests for the day agenda and schedule layout (31 tests in total)
 - **Firestore data model designed:** `items` (event + embedded subtask tree + embedded recurrence rule), `placements` (put on a day), `occurrences` (deterministic ids, only stored when changed), `days` (day note + completion log); no composite indexes required
 
 ### Pending
@@ -51,9 +52,15 @@ Built on Firebase (Auth, Firestore, Hosting — free Spark plan) with React + Ty
 
 ## Setup
 
-> Detailed instructions will be added once the project is scaffolded.
-
 Requirements: Node.js 20+, a Google account, and the Firebase CLI (`npm install -g firebase-tools`).
+
+1. Create a Firebase project (free Spark plan): enable **Authentication → Google**, create a **Firestore** database in production mode and register a **web app**.
+2. `cp .env.example .env` and fill in the web app config.
+3. `npm install` and `npm run dev`. Sign in once.
+4. Copy your **User UID** (Firebase Console → Authentication → Users), create `firestore.rules` from `firestore.rules.example` with your UID, then deploy the rules: `firebase deploy --only firestore:rules,firestore:indexes`.
+5. Deploy: `npm run build && firebase deploy --only hosting`, and add the hosting domain to Auth's authorized domains.
+
+Scripts: `npm run dev`, `npm run build`, `npm test`, `npm run lint`.
 
 ---
 

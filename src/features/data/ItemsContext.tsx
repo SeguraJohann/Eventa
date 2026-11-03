@@ -58,6 +58,24 @@ export function ItemsProvider({ children }: { children: ReactNode }) {
     });
   }, [uid, retained]);
 
+  // A fetched copy goes stale once the item is live again: drop it so it is
+  // fetched fresh if it leaves the live list later (finished, archived…).
+  useEffect(() => {
+    setFetched((prev) => {
+      if (prev.size === 0) return prev;
+      const live = new Set(items.map((i) => i.id));
+      let changed = false;
+      const next = new Map(prev);
+      for (const id of prev.keys()) {
+        if (live.has(id)) {
+          next.delete(id);
+          changed = true;
+        }
+      }
+      return changed ? next : prev;
+    });
+  }, [items]);
+
   const retainInactive = useCallback(() => {
     retainCount.current++;
     setRetained(true);

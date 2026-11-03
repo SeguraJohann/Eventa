@@ -157,7 +157,7 @@ export function RepeatDetail({ item, readOnly }: { item: Item; readOnly: boolean
                 {heat.flat().map((c) => (
                   <button
                     key={c.date}
-                    className={`${styles.hc} ${styles[c.level]} ${c.date === today ? styles.today : ""}`}
+                    className={`${styles.hc} ${styles[c.level] ?? ""} ${c.date === today ? styles.today : ""}`}
                     title={`${shortDate(c.date)}`}
                     aria-label={shortDate(c.date)}
                     disabled={c.level === "none" || c.date > today}

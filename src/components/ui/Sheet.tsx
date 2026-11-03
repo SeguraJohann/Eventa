@@ -14,6 +14,10 @@ interface Props {
   onSubmit?: () => void;
 }
 
+// Several sheets can be open (and close in the same render): lock the page
+// scroll with a counter instead of restoring a saved value.
+let openSheets = 0;
+
 /** Bottom sheet on mobile, centered modal on desktop. */
 export function Sheet({ title, eyebrow, onClose, children, footer, wide, onSubmit }: Props) {
   const t = useT();
@@ -40,11 +44,12 @@ export function Sheet({ title, eyebrow, onClose, children, footer, wide, onSubmi
       }
     }
     document.addEventListener("keydown", onKey);
-    const prev = document.body.style.overflow;
+    openSheets++;
     document.body.style.overflow = "hidden";
     return () => {
       document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prev;
+      openSheets = Math.max(0, openSheets - 1);
+      if (openSheets === 0) document.body.style.overflow = "";
     };
   }, []);
 
