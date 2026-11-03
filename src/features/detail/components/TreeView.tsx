@@ -83,7 +83,7 @@ export function TreeView({ storageKey, index, stateOf, progressOf, onToggle, sel
 
   const addRow = (parent: string | null, depth: number) => {
     if (!onAdd) return null;
-    const pad = { paddingLeft: 10 + depth * 28 };
+    const pad = { paddingLeft: 10 + depth * 28, "--d": depth } as React.CSSProperties;
     if (adding === parent) {
       return (
         <div className={styles.t} style={pad} key={`add-${parent}`}>
@@ -135,7 +135,7 @@ export function TreeView({ storageKey, index, stateOf, progressOf, onToggle, sel
       const progress = kids ? progressOf(id) : null;
       const cls = [styles.t, depth === 0 ? styles.top : "", state === "done" ? styles.done : "", selectedId === id ? styles.sel : "", off ? styles.off : ""].join(" ");
       rows.push(
-        <div key={id} className={cls} style={{ paddingLeft: 10 + depth * 28 }} onClick={() => onSelect?.(id)} role="treeitem" aria-selected={selectedId === id} aria-expanded={kids ? !isCollapsed : undefined}>
+        <div key={id} className={cls} style={{ paddingLeft: 10 + depth * 28, "--d": depth } as React.CSSProperties} onClick={() => onSelect?.(id)} role="treeitem" aria-selected={selectedId === id} aria-expanded={kids ? !isCollapsed : undefined}>
           {kids ? (
             <button
               type="button"

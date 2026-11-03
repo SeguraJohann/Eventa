@@ -104,7 +104,7 @@ export function AppLayout() {
         </div>
       </nav>
 
-      <main className={styles.main}>
+      <main className={`${styles.main} ${path === paths.today ? styles.fit : ""}`}>
         <div className={styles.inner}>
           {!online && (
             <div className={styles.offline} role="status">

@@ -4,6 +4,10 @@
   position: relative;
   overscroll-behavior: contain;
 }
+.scroller.fill {
+  flex: 1;
+  min-height: 0;
+}
 .head {
   display: grid;
   position: sticky;

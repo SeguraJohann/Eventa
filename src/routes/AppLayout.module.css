@@ -120,6 +120,17 @@
   flex-direction: column;
   gap: 18px;
 }
+.main.fit {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-bottom: 20px;
+}
+.main.fit .inner {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
 .tabbar,
 .fab,
 .mobileTop {
@@ -147,6 +158,12 @@
   .main {
     padding: 18px 16px calc(var(--tabbar-h) + 100px);
     height: 100%;
+  }
+  .main.fit {
+    padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px) + 12px);
+  }
+  .main.fit .inner {
+    gap: 12px;
   }
   .tabbar {
     display: flex;

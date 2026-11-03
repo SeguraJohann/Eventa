@@ -13,6 +13,7 @@ import { ColorDot } from "@/components/ui/misc";
 import { fmt, useT } from "@/i18n";
 import { Schedule } from "./Schedule";
 import { EntryRow } from "./EntryRow";
+import styles from "./DayView.module.css";
 
 interface Props {
   date: DateKey;
@@ -23,9 +24,11 @@ interface Props {
   leftTop?: React.ReactNode;
   /** Extra hint under the untimed list. */
   hint?: string;
+  /** Fill the available height; the schedule scrolls inside (Today). */
+  fit?: boolean;
 }
 
-export function DayView({ date, entries, showOverdue, leftTop, hint }: Props) {
+export function DayView({ date, entries, showOverdue, leftTop, hint, fit }: Props) {
   const t = useT();
   const today = useToday();
   const { open } = useModals();
@@ -33,8 +36,8 @@ export function DayView({ date, entries, showOverdue, leftTop, hint }: Props) {
   const { untimed, timed } = useMemo(() => splitDay(entries), [entries]);
 
   return (
-    <div className="cols">
-      <div className="stack">
+    <div className={fit ? styles.fit : "cols"}>
+      <div className={fit ? `stack ${styles.side}` : "stack"}>
         {leftTop}
         {showOverdue && <OverdueCard />}
         <section className="card" style={{ padding: "12px 6px" }}>
@@ -53,8 +56,8 @@ export function DayView({ date, entries, showOverdue, leftTop, hint }: Props) {
         {hint && <p className="muted">{hint}</p>}
         <DayLogCard date={date} isToday={date === today} />
       </div>
-      <section className="card" style={{ flex: "1 1 380px" }}>
-        <div className="top" style={{ marginBottom: 12 }}>
+      <section className={fit ? `card ${styles.sched}` : "card"} style={fit ? undefined : { flex: "1 1 380px" }}>
+        <div className="top" style={{ marginBottom: fit ? 8 : 12 }}>
           <h2 className="h2">{t.today.schedule}</h2>
           <span className="muted desk-only">{t.today.scheduleHint}</span>
         </div>
@@ -64,6 +67,7 @@ export function DayView({ date, entries, showOverdue, leftTop, hint }: Props) {
           onEntryTap={handlers.onTap}
           onEntryToggle={handlers.onToggle}
           onEntryMove={handlers.onMove}
+          fill={fit}
         />
       </section>
     </div>

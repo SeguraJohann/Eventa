@@ -1,6 +1,6 @@
 import { useRef, useState, type KeyboardEvent } from "react";
 import { newNodeId, normalizeRows, type EditorRow } from "@/lib/tree/tree";
-import { CloseIcon, GripIcon, IndentIcon, OutdentIcon, PasteIcon } from "@/components/icons";
+import { AddIcon, CloseIcon, GripIcon, IndentIcon, OutdentIcon, PasteIcon } from "@/components/icons";
 import { useModals } from "@/features/modals/ModalContext";
 import { useT } from "@/i18n";
 import styles from "./ItemForm.module.css";
@@ -36,8 +36,11 @@ export function TreeEditor({ rows, onChange }: Props) {
     return end;
   };
 
+  const canIndent = (i: number) => i > 0 && rows[i].depth <= rows[i - 1].depth;
+  const hasChildren = (i: number) => i + 1 < rows.length && rows[i + 1].depth > rows[i].depth;
+
   const indent = (i: number, dir: 1 | -1) => {
-    if (dir === 1 && (i === 0 || rows[i].depth > rows[i - 1].depth)) return;
+    if (dir === 1 && !canIndent(i)) return;
     if (dir === -1 && rows[i].depth === 0) return;
     const end = blockOf(i);
     set(rows.map((r, k) => (k >= i && k < end ? { ...r, depth: r.depth + dir } : r)));
@@ -50,6 +53,15 @@ export function TreeEditor({ rows, onChange }: Props) {
     set(next);
     const target = next[Math.max(0, i - 1)];
     focus(target ? target.id : "new");
+  };
+
+  // Inserts an empty child as the first subtask of row i (works without a keyboard).
+  const addChild = (i: number) => {
+    const id = newNodeId();
+    const next = [...rows];
+    next.splice(i + 1, 0, { id, title: "", depth: rows[i].depth + 1 });
+    set(next);
+    focus(id);
   };
 
   const onKey = (e: KeyboardEvent<HTMLInputElement>, i: number) => {
@@ -112,7 +124,6 @@ export function TreeEditor({ rows, onChange }: Props) {
         <div
           key={r.id}
           className={`${styles.te} ${overIdx === i ? styles.over : ""}`}
-          style={{ paddingLeft: r.depth * 28 }}
           onDragOver={(e) => {
             if (dragId) {
               e.preventDefault();
@@ -141,12 +152,16 @@ export function TreeEditor({ rows, onChange }: Props) {
           >
             <GripIcon size={16} />
           </span>
+          {Array.from({ length: r.depth }, (_, k) => (
+            <span key={k} className={`${styles.guide} ${k === r.depth - 1 ? styles.elbow : ""}`} aria-hidden="true" />
+          ))}
+          <span className={`${styles.bullet} ${hasChildren(i) ? styles.parent : ""}`} aria-hidden="true" />
           <input
             ref={(el) => {
               if (el) refs.current.set(r.id, el);
               else refs.current.delete(r.id);
             }}
-            className="inp"
+            className={`inp ${hasChildren(i) ? styles.parentInp : ""}`}
             value={r.title}
             aria-label={t.form.subtaskLabel}
             onChange={(e) => onChange(rows.map((x) => (x.id === r.id ? { ...x, title: e.target.value } : x)))}
@@ -159,16 +174,18 @@ export function TreeEditor({ rows, onChange }: Props) {
               }
             }}
           />
-          {r.depth === 0 ? (
-            <button type="button" className="ib" aria-label={t.form.indent} onClick={() => indent(i, 1)} disabled={i === 0}>
-              <IndentIcon size={16} />
-            </button>
-          ) : (
-            <button type="button" className="ib" aria-label={t.form.outdent} onClick={() => indent(i, -1)}>
+          <span className={styles.acts}>
+            <button type="button" className="ib" aria-label={t.form.outdent} title={t.form.outdent} onClick={() => indent(i, -1)} disabled={r.depth === 0}>
               <OutdentIcon size={16} />
             </button>
-          )}
-          <button type="button" className="ib" aria-label={t.form.remove} onClick={() => remove(i)}>
+            <button type="button" className="ib" aria-label={t.form.indent} title={t.form.indent} onClick={() => indent(i, 1)} disabled={!canIndent(i)}>
+              <IndentIcon size={16} />
+            </button>
+            <button type="button" className="ib" aria-label={t.form.addChild} title={t.form.addChild} onClick={() => addChild(i)}>
+              <AddIcon size={16} />
+            </button>
+          </span>
+          <button type="button" className="ib" aria-label={t.form.remove} title={t.form.remove} onClick={() => remove(i)}>
             <CloseIcon size={16} />
           </button>
         </div>
@@ -189,6 +206,7 @@ export function TreeEditor({ rows, onChange }: Props) {
         }}
       >
         <span className={styles.grip} />
+        <span className={styles.bullet} aria-hidden="true" />
         <input
           ref={newRef}
           className="inp"

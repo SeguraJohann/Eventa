@@ -1,0 +1,13 @@
+.screen {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  flex: 1;
+  min-height: 0;
+}
+
+@media (max-width: 859px) {
+  .screen {
+    gap: 12px;
+  }
+}

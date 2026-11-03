@@ -20,6 +20,8 @@ interface Props {
   showHeader?: boolean;
   /** Color blocks only; tapping a column opens the day (mobile week). */
   compact?: boolean;
+  /** Take the parent's height (flex) instead of a fixed visible window. */
+  fill?: boolean;
   onEmptySlot?: (date: DateKey, start: TimeKey, end: TimeKey) => void;
   onEntryTap?: (entry: AgendaEntry) => void;
   onEntryToggle?: (entry: AgendaEntry, checked: boolean) => void;
@@ -57,7 +59,7 @@ function blockDetail(e: AgendaEntry): string {
   return "";
 }
 
-export function Schedule({ columns, showHeader, compact, onEmptySlot, onEntryTap, onEntryToggle, onEntryMove, onColumnTap, onHeaderTap }: Props) {
+export function Schedule({ columns, showHeader, compact, fill, onEmptySlot, onEntryTap, onEntryToggle, onEntryMove, onColumnTap, onHeaderTap }: Props) {
   const t = useT();
   const clock = useClock();
   const scroller = useRef<HTMLDivElement>(null);
@@ -212,7 +214,11 @@ export function Schedule({ columns, showHeader, compact, onEmptySlot, onEntryTap
   const nowTop = clock.minutes * pxPerMin;
 
   return (
-    <div className={`${styles.scroller} ${compact ? styles.compact : ""}`} ref={scroller} style={{ maxHeight: visibleHeight }}>
+    <div
+      className={`${styles.scroller} ${compact ? styles.compact : ""} ${fill ? styles.fill : ""}`}
+      ref={scroller}
+      style={fill ? undefined : { maxHeight: visibleHeight }}
+    >
       {showHeader && (
         <div className={styles.head} style={{ gridTemplateColumns: gridCols }}>
           <span />

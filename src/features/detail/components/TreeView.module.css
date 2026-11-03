@@ -7,8 +7,14 @@
   border-radius: 10px;
   cursor: pointer;
 }
+/* Guide lines: one per ancestor level, aligned with the parent's toggle. */
+.t {
+  background-image: repeating-linear-gradient(to right, transparent 0 20px, var(--line) 20px 22px, transparent 22px 28px);
+  background-size: calc(var(--d, 0) * 28px) 100%;
+  background-repeat: no-repeat;
+}
 .t:hover {
-  background: var(--soft);
+  background-color: var(--soft);
 }
 .tg {
   width: 22px;
@@ -46,10 +52,10 @@
   flex: none;
 }
 .sel {
-  background: var(--blue-t);
+  background-color: var(--blue-t);
 }
 .sel:hover {
-  background: var(--blue-t);
+  background-color: var(--blue-t);
 }
 .off {
   opacity: 0.5;
