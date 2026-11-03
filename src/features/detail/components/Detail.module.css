@@ -1,0 +1,91 @@
+.rootCheck {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 0 12px;
+  font-weight: 700;
+}
+.selbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px));
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 4;
+}
+.stats {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.stat {
+  flex: 1 1 110px;
+  display: flex;
+  flex-direction: column;
+}
+.stat b {
+  font: 700 28px var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+.heat {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(7, 16px);
+  grid-auto-columns: 16px;
+  gap: 3px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+.hc {
+  border-radius: 4px;
+  background: var(--heat-missed);
+  border: 0;
+  padding: 0;
+}
+.hc.none {
+  background: var(--heat-none);
+  border: 1px solid var(--line);
+}
+.hc.future {
+  background: transparent;
+  border: 1px dashed var(--line);
+}
+.hc.skipped {
+  background: var(--heat-skipped);
+  background-image: repeating-linear-gradient(135deg, transparent 0 3px, var(--slate-line) 3px 5px);
+}
+.hc.partial {
+  background: var(--heat-partial);
+}
+.hc.done {
+  background: var(--heat-done);
+}
+.hc.today {
+  outline: 2px solid var(--ink);
+  outline-offset: 1px;
+}
+.heatLegend {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--muted);
+  align-items: center;
+}
+.heatLegend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.heatLegend i {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}

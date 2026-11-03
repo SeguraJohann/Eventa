@@ -1,0 +1,196 @@
+.scroller {
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  overscroll-behavior: contain;
+}
+.head {
+  display: grid;
+  position: sticky;
+  top: 0;
+  background: var(--surface);
+  z-index: 4;
+  padding-bottom: 8px;
+}
+.wh {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  border-radius: 10px;
+  padding: 2px 0;
+}
+.wh b {
+  display: block;
+  font-size: 16px;
+  color: var(--ink);
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+}
+.wh.on b {
+  background: var(--ink);
+  color: #fff;
+  border-radius: 99px;
+}
+.grid {
+  display: grid;
+  position: relative;
+}
+.hours span {
+  display: block;
+  height: var(--hr);
+  font-size: 11px;
+  color: var(--muted);
+  transform: translateY(-7px);
+  font-variant-numeric: tabular-nums;
+}
+.hours span:first-child {
+  transform: none;
+}
+.col {
+  position: relative;
+  border-left: 1px solid var(--line);
+  background: repeating-linear-gradient(to bottom, var(--line) 0 1px, transparent 1px var(--hr));
+  touch-action: pan-y;
+  cursor: copy;
+}
+.col.past {
+  background-color: var(--soft);
+}
+.ev {
+  position: absolute;
+  border-radius: 8px;
+  padding: 5px 8px;
+  font-size: 12px;
+  overflow: hidden;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  text-align: left;
+  z-index: 1;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: pan-y;
+}
+.ev b {
+  display: block;
+  font-size: 12.5px;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ev small {
+  color: inherit;
+  opacity: 0.85;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.txt {
+  min-width: 0;
+  flex: 1;
+}
+.repeat {
+  background: var(--tone-repeat-t);
+  color: var(--tone-repeat);
+  border: 1px solid var(--tone-repeat-line);
+}
+.once {
+  background: var(--tone-once-t);
+  color: var(--tone-once);
+  border: 1px solid var(--tone-once-line);
+}
+.block {
+  background: var(--tone-block-t);
+  color: var(--tone-block);
+  border: 1px solid var(--tone-block-line);
+}
+.background {
+  background: repeating-linear-gradient(135deg, var(--slate-t) 0 8px, var(--slate-stripe) 8px 16px);
+  color: var(--slate);
+  z-index: 0;
+  border: 1px solid transparent;
+}
+.done {
+  opacity: 0.62;
+}
+.done b {
+  text-decoration: line-through;
+}
+.skipped {
+  opacity: 0.4;
+  border-style: dashed;
+}
+.dragging {
+  opacity: 0.85;
+  box-shadow: var(--shadow-pop);
+  z-index: 6;
+  cursor: grabbing;
+}
+.resize {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 10px;
+  cursor: ns-resize;
+  touch-action: none;
+}
+.resize::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 3px;
+  width: 22px;
+  height: 3px;
+  margin-left: -11px;
+  border-radius: 3px;
+  background: currentColor;
+  opacity: 0.35;
+}
+.now {
+  position: absolute;
+  left: -5px;
+  right: 0;
+  height: 2px;
+  background: var(--color-now);
+  z-index: var(--z-now);
+  pointer-events: none;
+}
+.now::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 99px;
+  background: var(--color-now);
+}
+.ghostSlot {
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  border-radius: 8px;
+  border: 1.5px dashed var(--box);
+  pointer-events: none;
+  z-index: 0;
+}
+.compact .ev {
+  padding: 0;
+  font-size: 0;
+}
+.compact .ev * {
+  display: none;
+}
+.compact .col {
+  cursor: pointer;
+}

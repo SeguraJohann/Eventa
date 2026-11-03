@@ -1,0 +1,134 @@
+.wk,
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+}
+.wk {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  padding: 0 4px;
+}
+.cell {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  min-height: 104px;
+  padding: 7px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  overflow: hidden;
+  text-align: left;
+  min-width: 0;
+}
+.cell:hover {
+  border-color: var(--box);
+}
+.out {
+  background: transparent;
+  border-style: dashed;
+  opacity: 0.7;
+}
+.today {
+  border: 2px solid var(--ink);
+  padding: 6px;
+}
+.dn {
+  font-weight: 700;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 99px;
+  flex: none;
+}
+.today .dn {
+  background: var(--ink);
+  color: #fff;
+}
+.cbar {
+  height: 5px;
+  flex: none;
+  width: 100%;
+}
+.blks {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.blk {
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 2px 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.blk.done {
+  text-decoration: line-through;
+  opacity: 0.65;
+}
+.more {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 0 6px;
+}
+.nav {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.untimedRow {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+.untimedCell {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+@media (max-width: 859px) {
+  .wk,
+  .grid {
+    gap: 4px;
+  }
+  .cell {
+    min-height: 58px;
+    padding: 4px 3px;
+    align-items: center;
+    gap: 4px;
+    border-radius: 10px;
+  }
+  .today {
+    padding: 3px 2px;
+  }
+  .cbar {
+    height: 4px;
+  }
+  .blks {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3px;
+  }
+  .blk {
+    font-size: 0;
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border-radius: 99px;
+  }
+  .more {
+    display: none;
+  }
+}

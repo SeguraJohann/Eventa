@@ -1,0 +1,103 @@
+.te {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  border-radius: 8px;
+}
+.te :global(.inp) {
+  min-height: 40px;
+}
+.over {
+  box-shadow: inset 0 2px 0 var(--blue);
+}
+.grip {
+  color: var(--box);
+  width: 16px;
+  display: inline-flex;
+  justify-content: center;
+  flex: none;
+  cursor: grab;
+}
+.sec {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.sec > summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+.sec > summary::-webkit-details-marker {
+  display: none;
+}
+.sec > summary::after {
+  content: "›";
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 20px;
+  transition: transform 0.15s;
+}
+.sec[open] > summary::after {
+  transform: rotate(90deg);
+}
+.sec > summary b,
+.sec > summary .sum {
+  display: block;
+}
+.sum {
+  color: var(--muted);
+  font-size: 13px;
+}
+.in {
+  padding: 14px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: 1px solid var(--line);
+}
+.colors {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  flex: none;
+}
+.swatch.on {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+.auto {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  border: 1.5px dashed var(--box);
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 8px;
+}
+.auto.on {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+.timeInp {
+  width: 112px;
+  flex: none;
+}
+.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 13px;
+}

@@ -118,7 +118,13 @@ export interface OccurrenceRecord {
  * Chronological records of an item chain (oldest predecessor first) from the
  * first occurrence up to `today` inclusive.
  */
-export function historyOf(chain: Item[], docsByItem: Map<string, Map<string, Occurrence>>, today: DateKey): OccurrenceRecord[] {
+export function historyOf(
+  chain: Item[],
+  docsByItem: Map<string, Map<string, Occurrence>>,
+  today: DateKey,
+  /** Optional lower bound to limit the scan (e.g. list views). */
+  since: DateKey | null = null,
+): OccurrenceRecord[] {
   const out: OccurrenceRecord[] = [];
   for (const item of chain) {
     const ctx = itemRuleContext(item);
@@ -128,7 +134,8 @@ export function historyOf(chain: Item[], docsByItem: Map<string, Map<string, Occ
     const docs = docsByItem.get(item.id) ?? new Map<string, Occurrence>();
     let earliest = from;
     for (const d of docs.values()) if (d.originalDate < earliest) earliest = d.originalDate;
-    const start = earliest < ctx.rule.startDate ? ctx.rule.startDate : earliest;
+    let start = earliest < ctx.rule.startDate ? ctx.rule.startDate : earliest;
+    if (since && start < since) start = since;
     for (const d of datesBetween(ctx, start, today)) {
       const doc = docs.get(occurrenceId(item.id, d)) ?? null;
       const shown = doc?.movedToDate ?? d;

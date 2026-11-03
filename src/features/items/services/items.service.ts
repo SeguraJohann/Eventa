@@ -326,7 +326,7 @@ export async function splitItem(uid: string, before: Item, fromDate: DateKey, dr
  * Checks/unchecks a node (or the root) of an item that does NOT repeat.
  * Returns true when this action completed the whole item (to offer M12).
  */
-export function toggleItemNode(uid: string, item: Item, nodeId: string | null, checked: boolean, placements: Placement[], now: Millis = Date.now()): boolean {
+export function toggleItemNode(uid: string, item: Item, nodeId: string | null, checked: boolean, now: Millis = Date.now()): boolean {
   const today = todayKey();
   const root = { completedAt: item.completedAt, completedOn: item.completedOn };
   const res = toggleNonRepeating(item.nodes, root, nodeId, checked, now, today);
@@ -346,7 +346,6 @@ export function toggleItemNode(uid: string, item: Item, nodeId: string | null, c
   const batch = new ChunkedBatch();
   batch.update(itemDoc(uid, item.id), update);
   const after: Item = { ...item, nodes, completedAt: res.root.completedAt, completedOn: res.root.completedOn };
-  syncPlacementsOpen(batch, uid, after, placements);
 
   for (const leaf of res.completedLeaves) {
     const nid = leaf === "_root" ? null : leaf;
@@ -364,6 +363,7 @@ export function toggleItemNode(uid: string, item: Item, nodeId: string | null, c
     if (leaf.completedOn) removeLogEntry(batch, uid, leaf.completedOn, logKey(item.id, nid));
   }
   commitInBackground(batch);
+  void syncOpenLater(uid, after);
   return item.completedAt === null && res.root.completedAt !== null;
 }
 
@@ -376,15 +376,15 @@ function closePauses(pauses: Pause[], today: DateKey): Pause[] {
     .filter((p) => p.to === null || p.to >= p.from);
 }
 
-export function setItemStatus(uid: string, item: Item, status: ItemStatus, placements: Placement[], now: Millis = Date.now()): void {
+export function setItemStatus(uid: string, item: Item, status: ItemStatus, now: Millis = Date.now()): void {
   const today = todayKey();
   let pauses = item.pauses;
   if (status === "paused" && item.status !== "paused") pauses = [...closePauses(pauses, today), { from: today, to: null }];
   if (status !== "paused" && item.status === "paused") pauses = closePauses(pauses, today);
   const batch = new ChunkedBatch();
   batch.update(itemDoc(uid, item.id), { status, pauses, statusChangedAt: ts(now), updatedAt: serverTimestamp() });
-  syncPlacementsOpen(batch, uid, { ...item, status, pauses }, placements);
   commitInBackground(batch);
+  void syncOpenLater(uid, { ...item, status, pauses });
 }
 
 export function setPinned(uid: string, item: Item, pinned: boolean): void {
@@ -533,11 +533,26 @@ async function writeTree(uid: string, item: Item, nodesIn: NodeMap, now: Millis,
   commitInBackground(batch);
 }
 
-/** Recompute placements' `open` after structure changes when the caller has them. */
-export async function refreshPlacementsOpen(uid: string, item: Item): Promise<void> {
-  const placements = await getItemPlacements(uid, item.id);
-  const batch = new ChunkedBatch();
-  syncPlacementsOpen(batch, uid, item, placements);
-  if (batch.size > 0) commitInBackground(batch);
+/**
+ * Recomputes placements' `open` flag in a second batch so the main write (and
+ * the checkbox) is instant; the placements query may need the network.
+ */
+async function syncOpenLater(uid: string, item: Item): Promise<void> {
+  if (item.scheduleMode === "repeat") return;
+  try {
+    const placements = await getItemPlacements(uid, item.id);
+    const batch = new ChunkedBatch();
+    syncPlacementsOpen(batch, uid, item, placements);
+    if (batch.size > 0) commitInBackground(batch);
+  } catch (e) {
+    reportError(e);
+  }
 }
 
+
+/** Updates the recurrence rule only (M4 opened from the detail view). */
+export function updateRecurrence(uid: string, item: Item, rule: RecurrenceRule): void {
+  const batch = new ChunkedBatch();
+  batch.update(itemDoc(uid, item.id), { recurrence: rule, updatedAt: serverTimestamp() });
+  commitInBackground(batch);
+}

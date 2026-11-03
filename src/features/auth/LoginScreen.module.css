@@ -1,0 +1,36 @@
+.container {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  background: var(--ink);
+}
+.card {
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8) var(--space-6);
+  width: min(400px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  align-items: center;
+  text-align: center;
+}
+.mark {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, var(--brand-a) 50%, var(--brand-b) 50%);
+}
+.title {
+  font: 700 34px var(--font-display);
+}
+.description {
+  color: var(--muted);
+}
+.error {
+  color: var(--rose);
+  font-size: 13px;
+  font-weight: 600;
+}

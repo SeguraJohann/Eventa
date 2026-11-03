@@ -32,18 +32,20 @@ Built on Firebase (Auth, Firestore, Hosting — free Spark plan) with React + Ty
 - **Subtask tree logic**: unlimited depth, check/uncheck propagation, progress, paste-list parsing, per-occurrence templates
 - **Day agenda logic**: occurrences (moved, skipped, time overrides), placements, side-by-side schedule layout, streaks, completion rate, heatmap
 - **Firestore services**: items, placements, occurrences and day log (batched writes, offline-first)
+- **UI foundations:** design tokens from the mockup, icons, i18n (Spanish), Google sign-in, responsive layout (bottom tab bar < 860 px, sidebar with pinned events ≥ 860 px), contextual ＋ button, offline banner, toasts
+- **Today view:** pending from previous days, "no time" list, schedule with current-time line, day log and day note
+- **Schedule:** side-by-side overlaps, background blocks, tap an empty slot to add, drag to move and resize (long press on mobile)
+- **Calendar:** month grid with completion bar, week view with timeline, day view
+- **Events list:** category filter with counts, search, "show finished", automatic tags, progress and today's checkbox
+- **Event detail:** adaptive view (one-off / repeating / time block), subtask tree with filters, subtask panel, stats, heatmap, exceptions
+- **Single event form** with subtask tree editor (Enter / Tab / Shift+Tab / drag / paste list), when, completion and more options
+- **Modals:** add to day, recurrence editor with preview, put on a day, occurrence actions, edit scope, ⋯ menu, move subtask, past occurrence, delete confirmation, completed prompt, reschedule, day note
 - **Firestore data model designed:** `items` (event + embedded subtask tree + embedded recurrence rule), `placements` (put on a day), `occurrences` (deterministic ids, only stored when changed), `days` (day note + completion log); no composite indexes required
 
 ### Pending
-- **UI foundations:** design tokens, icons, i18n, Google sign-in, responsive layout (tab bar / sidebar)
-- **Subtask tree** (view + editor + paste list)
-- **Event form** and recurrence editor
-- **Events list** and adaptive event detail
-- **Today view** (no-time list, schedule, overdue items, day log)
-- **Put on a day**, occurrence actions, edit scope, drag to move/resize
-- **Calendar** (month / week / day)
-- **Streaks**, 14-week heatmap, past occurrence editing, day note, empty states
-- Mobile polish and scenario testing
+- Firebase project setup (console), real `.env` values, UID allowlist and rules deploy
+- Manual testing of the spec scenarios in the real app
+- Mobile polish after testing
 
 ---
 

@@ -1,0 +1,117 @@
+/* Design tokens — taken from Especificaciones/maqueta.html.
+   Components use ONLY these variables, never literal colors. */
+:root {
+  /* Primitives */
+  --bg: #f1f3f6;
+  --surface: #ffffff;
+  --ink: #16202e;
+  --ink-2: #26334a;
+  --muted: #556173;
+  --line: #dce1e9;
+  --soft: #f6f8fa;
+  --box: #7a8699;
+
+  --blue: #2a4fd0;
+  --blue-t: #e7ecfc;
+  --blue-line: #c6d2f7;
+  --orange: #b9480f;
+  --orange-s: #e5702a;
+  --orange-t: #fceadc;
+  --orange-line: #f4cdb0;
+  --slate: #3e5470;
+  --slate-t: #e4e9f0;
+  --slate-line: #cdd6e2;
+  --slate-stripe: #edf0f5;
+  --green: #1d7a57;
+  --green-t: #e1f2ea;
+  --teal: #0b7a83;
+  --teal-t: #ddf1f2;
+  --violet: #6a43bf;
+  --violet-t: #eee8fa;
+  --rose: #a3306b;
+  --rose-t: #fbe6f0;
+  --red: #d93025;
+
+  --side-text: #c9d1de;
+  --side-muted: #9aa6b8;
+  --brand-a: #6c8bff;
+  --brand-b: #f08a4b;
+
+  /* Semantic */
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-text: var(--ink);
+  --color-text-muted: var(--muted);
+  --color-border: var(--line);
+  --color-focus: var(--blue);
+  --color-primary: var(--ink);
+  --color-on-primary: #ffffff;
+  --color-danger: var(--rose);
+  --color-danger-t: var(--rose-t);
+  --color-now: var(--red);
+  --color-done: var(--green);
+  --color-done-t: var(--green-t);
+  --color-partial: var(--orange-s);
+  --color-partial-t: var(--orange-t);
+  --color-partial-ink: var(--orange);
+
+  /* Schedule tones (by behavior) */
+  --tone-repeat: var(--orange);
+  --tone-repeat-t: var(--orange-t);
+  --tone-repeat-line: var(--orange-line);
+  --tone-repeat-dot: var(--orange-s);
+  --tone-once: var(--blue);
+  --tone-once-t: var(--blue-t);
+  --tone-once-line: var(--blue-line);
+  --tone-block: var(--slate);
+  --tone-block-t: var(--slate-t);
+  --tone-block-line: var(--slate-line);
+
+  /* Category chips */
+  --cat-task: var(--orange);
+  --cat-task-t: var(--orange-t);
+  --cat-project: var(--blue);
+  --cat-project-t: var(--blue-t);
+  --cat-event: var(--slate);
+  --cat-event-t: var(--slate-t);
+
+  /* Heatmap */
+  --heat-none: #ffffff;
+  --heat-missed: #e6e9ef;
+  --heat-partial: #f6c9a8;
+  --heat-done: #c4561a;
+  --heat-skipped: var(--slate-t);
+
+  /* Typography */
+  --font-display: "Bricolage Grotesque", Figtree, sans-serif;
+  --font-body: Figtree, system-ui, sans-serif;
+
+  /* Spacing / radius */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 999px;
+
+  --shadow-fab: 0 6px 16px rgba(22, 32, 46, 0.28);
+  --shadow-pop: 0 10px 30px rgba(22, 32, 46, 0.18);
+  --scrim: rgba(22, 32, 46, 0.5);
+
+  /* Layout */
+  --hr: 56px; /* height of one hour in the schedule */
+  --tabbar-h: 68px;
+  --side-w: 224px;
+
+  --z-base: 1;
+  --z-now: 3;
+  --z-bar: 5;
+  --z-modal: 10;
+  --z-toast: 20;
+}

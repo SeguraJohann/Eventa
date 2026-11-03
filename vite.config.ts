@@ -10,6 +10,10 @@ export default defineConfig({
       "@": path.resolve(import.meta.dirname, "./src"),
     },
   },
+  build: {
+    // Firebase alone is ~700 kB; it is cached after the first load.
+    chunkSizeWarningLimit: 1000,
+  },
   test: {
     include: ["src/**/*.test.ts"],
     environment: "node",
