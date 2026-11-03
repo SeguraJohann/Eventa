@@ -26,10 +26,12 @@ Built on Firebase (Auth, Firestore, Hosting — free Spark plan) with React + Ty
 
 ### Done
 - Repository created with `.gitignore` (environment files, internal docs and real Firestore rules are excluded)
+- Product decisions: app name **Eventa**, Google sign-in restricted to a single UID (allowlist)
+- **Firestore data model designed:** `items` (event + embedded subtask tree + embedded recurrence rule), `placements` (put on a day), `occurrences` (deterministic ids, only stored when changed), `days` (day note + completion log); no composite indexes required
 
 ### Pending
 - **Phase 0 — Foundations:** scaffold, folder structure, design tokens, icons, i18n, Firebase + Google Auth, Firestore rules with UID allowlist, responsive layout (tab bar / sidebar)
-- **Data model** and persistence services
+- **Persistence services** for the data model
 - **Recurrence engine** (rules, occurrences, exceptions) with tests
 - **Subtask tree** (view + editor + paste list)
 - **Event form** and recurrence editor
