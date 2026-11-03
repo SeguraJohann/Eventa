@@ -54,3 +54,6 @@ PROGRESS.md
 
 # Local Firebase project link (each user links their own)
 .firebaserc
+
+# Source artwork for the app icon (generated sizes live in public/icons)
+icono.png

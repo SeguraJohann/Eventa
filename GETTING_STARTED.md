@@ -109,7 +109,9 @@ To update the app later, run the same two commands again.
 1. Open your Hosting URL in **Chrome** on Android (or **Safari** on iPhone) and sign in.
 2. Android: menu **⋮ → Add to Home screen**. iPhone: **Share → Add to Home Screen**.
 
-This creates a shortcut that opens the app in the browser. A fully installable version (own icon, full screen, no browser bar) needs a web app manifest and icons, which are not included yet.
+On Android, Chrome may also offer **Install app** directly. It opens full screen, with its own icon and without the browser bar. If you added a shortcut before the manifest existed, remove it and add it again.
+
+To use your own icon, replace the PNG files in `public/icons/` (192, 512 and 180 px for iPhone) and deploy again.
 
 Your data also works offline: changes are stored on the device and synced when the connection returns.
 
