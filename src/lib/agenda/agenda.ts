@@ -146,11 +146,19 @@ export function isTimed(e: AgendaEntry): boolean {
   return e.timeMode === "timed" && e.startTime !== null && e.endTime !== null;
 }
 
-export function splitDay(entries: AgendaEntry[]): { untimed: AgendaEntry[]; timed: AgendaEntry[] } {
+/**
+ * Splits a day into the task list and the schedule.
+ * The list holds everything without a time, plus timed entries that have
+ * subtasks (so they can be checked off from the list); those stay on the schedule too.
+ */
+export function splitDay(entries: AgendaEntry[]): { list: AgendaEntry[]; timed: AgendaEntry[] } {
   const untimed: AgendaEntry[] = [];
   const timed: AgendaEntry[] = [];
   for (const e of entries) (isTimed(e) ? timed : untimed).push(e);
-  return { untimed: finishedLast(untimed), timed };
+  const timedWithTasks = timed
+    .filter((e) => e.progress !== null)
+    .sort((a, b) => timeToMinutes(a.startTime ?? "00:00") - timeToMinutes(b.startTime ?? "00:00"));
+  return { list: finishedLast([...untimed, ...timedWithTasks]), timed };
 }
 
 /** Done or skipped: nothing left to do on that entry today. */

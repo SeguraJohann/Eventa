@@ -21,9 +21,9 @@ interface Props {
   entries: AgendaEntry[];
   /** Show "pending from previous days" (only on today). */
   showOverdue?: boolean;
-  /** Content above the untimed list (e.g. day navigation). */
+  /** Content above the task list (e.g. day navigation). */
   leftTop?: React.ReactNode;
-  /** Extra hint under the untimed list. */
+  /** Extra hint under the task list. */
   hint?: string;
   /** Fill the available height; the schedule scrolls inside (Today). */
   fit?: boolean;
@@ -34,7 +34,7 @@ export function DayView({ date, entries, showOverdue, leftTop, hint, fit }: Prop
   const today = useToday();
   const { open } = useModals();
   const handlers = useEntryHandlers();
-  const { untimed, timed } = useMemo(() => splitDay(entries), [entries]);
+  const { list, timed } = useMemo(() => splitDay(entries), [entries]);
   const { ref: sideRef, edges } = useScrollEdges<HTMLDivElement>();
 
   return (
@@ -49,12 +49,12 @@ export function DayView({ date, entries, showOverdue, leftTop, hint, fit }: Prop
         {showOverdue && <OverdueCard />}
         <section className="card" style={{ padding: "12px 6px" }}>
           <h2 className="h2" style={{ padding: "0 10px 4px" }}>
-            {t.today.untimed}
+            {t.today.taskList}
           </h2>
-          {untimed.map((e) => (
+          {list.map((e) => (
             <EntryRow key={e.key} entry={e} onTap={handlers.onTap} onToggle={handlers.onToggle} />
           ))}
-          {untimed.length === 0 && timed.length === 0 && <p className="muted" style={{ padding: "6px 10px" }}>{t.today.emptyDay}</p>}
+          {list.length === 0 && timed.length === 0 && <p className="muted" style={{ padding: "6px 10px" }}>{t.today.emptyDay}</p>}
           <button className="row muted" style={{ minHeight: 44, padding: "0 10px", width: "100%", fontWeight: 600 }} onClick={() => open({ type: "addToDay", date })}>
             <AddIcon size={18} />
             {t.today.addToDay}

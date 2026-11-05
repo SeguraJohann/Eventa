@@ -1,4 +1,4 @@
-import type { AgendaEntry } from "@/lib/agenda/agenda";
+import { isTimed, type AgendaEntry } from "@/lib/agenda/agenda";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { NextIcon } from "@/components/icons";
 import { colorSolid } from "@/styles/semantic";
@@ -13,7 +13,7 @@ interface Props {
   streak?: number;
 }
 
-/** A row of the "no time" list of a day. */
+/** A row of the task list of a day. */
 export function EntryRow({ entry: e, onTap, onToggle, streak }: Props) {
   const t = useT();
   const directCheck = e.checkable && !e.progress && e.state !== "skipped";
@@ -33,6 +33,7 @@ export function EntryRow({ entry: e, onTap, onToggle, streak }: Props) {
       </span>
       <span className={styles.r}>
         {e.timeMode === "all_day" && <span className="chip">{t.common.allDay}</span>}
+        {isTimed(e) && <span className="chip">{fmt(t.today.timeRange, { start: e.startTime ?? "", end: e.endTime ?? "" })}</span>}
         {e.state === "skipped" && <span className="chip">{t.today.skipped}</span>}
         {e.occurrence?.moved && <span className="chip">{t.today.moved}</span>}
         {rule && (

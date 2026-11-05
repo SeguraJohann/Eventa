@@ -91,8 +91,8 @@ describe("agenda", () => {
 
   it("scenario 6/7: office in the background, a subtask on top", () => {
     const day = agendaForRange(src, "2026-11-02", "2026-11-02").get("2026-11-02")!;
-    const { untimed, timed } = splitDay(day);
-    expect(untimed.map((e) => e.item.id)).toEqual(["bread"]);
+    const { list, timed } = splitDay(day);
+    expect(list.map((e) => e.item.id)).toEqual(["bread"]);
     expect(timed.map((e) => e.tone).sort()).toEqual(["background", "once"]);
     const laid = layoutTimed(timed);
     const fg = laid.find((l) => !l.background)!;
@@ -104,6 +104,21 @@ describe("agenda", () => {
     const e = (key: string, state: AgendaEntry["state"]) => ({ key, state }) as AgendaEntry;
     const sorted = finishedLast([e("a", "done"), e("b", "pending"), e("c", "skipped"), e("d", "partial"), e("e", "missed")]);
     expect(sorted.map((x) => x.key)).toEqual(["b", "d", "e", "a", "c"]);
+  });
+
+  it("timed entries with subtasks also show in the task list, by start time", () => {
+    const e = (key: string, startTime: string | null, withTasks: boolean) =>
+      ({
+        key,
+        state: "pending",
+        timeMode: startTime ? "timed" : "none",
+        startTime,
+        endTime: startTime ? "23:00" : null,
+        progress: withTasks ? { done: 0, total: 3 } : null,
+      }) as AgendaEntry;
+    const { list, timed } = splitDay([e("gym", "18:00", true), e("meeting", "09:00", false), e("bread", null, false), e("run", "07:00", true)]);
+    expect(list.map((x) => x.key)).toEqual(["bread", "run", "gym"]);
+    expect(timed.map((x) => x.key)).toEqual(["gym", "meeting", "run"]);
   });
 
   it("office does not count as something to check", () => {
