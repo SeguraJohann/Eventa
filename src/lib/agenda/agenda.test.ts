@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Item, Placement, TreeNode } from "@/types/models";
-import { agendaForRange, daySummary, layoutTimed, splitDay } from "./agenda";
+import { agendaForRange, daySummary, finishedLast, layoutTimed, splitDay, type AgendaEntry } from "./agenda";
 import { placementShouldBeOpen, suggestedCategory } from "./items";
 
 const node = (parentId: string | null, extra: Partial<TreeNode> = {}): TreeNode => ({
@@ -98,6 +98,12 @@ describe("agenda", () => {
     const fg = laid.find((l) => !l.background)!;
     expect(fg.cols).toBe(1);
     expect(laid.find((l) => l.background)!.entry.item.id).toBe("office");
+  });
+
+  it("finished entries go to the bottom, keeping their order", () => {
+    const e = (key: string, state: AgendaEntry["state"]) => ({ key, state }) as AgendaEntry;
+    const sorted = finishedLast([e("a", "done"), e("b", "pending"), e("c", "skipped"), e("d", "partial"), e("e", "missed")]);
+    expect(sorted.map((x) => x.key)).toEqual(["b", "d", "e", "a", "c"]);
   });
 
   it("office does not count as something to check", () => {

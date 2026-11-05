@@ -150,7 +150,17 @@ export function splitDay(entries: AgendaEntry[]): { untimed: AgendaEntry[]; time
   const untimed: AgendaEntry[] = [];
   const timed: AgendaEntry[] = [];
   for (const e of entries) (isTimed(e) ? timed : untimed).push(e);
-  return { untimed, timed };
+  return { untimed: finishedLast(untimed), timed };
+}
+
+/** Done or skipped: nothing left to do on that entry today. */
+export function isFinished(e: AgendaEntry): boolean {
+  return e.state === "done" || e.state === "skipped";
+}
+
+/** Pending entries first, finished ones at the bottom; keeps the order inside each group. */
+export function finishedLast(entries: AgendaEntry[]): AgendaEntry[] {
+  return [...entries.filter((e) => !isFinished(e)), ...entries.filter(isFinished)];
 }
 
 /** "X of Y done" for a day: checkable, not skipped. */

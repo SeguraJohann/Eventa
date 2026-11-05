@@ -11,6 +11,17 @@
   min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
+  /* Scroll hint: the cut edge fades out, so a half-visible row shows there is more. */
+  --fade-top: 0px;
+  --fade-bottom: 0px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, var(--ink) var(--fade-top), var(--ink) calc(100% - var(--fade-bottom)), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, var(--ink) var(--fade-top), var(--ink) calc(100% - var(--fade-bottom)), transparent 100%);
+}
+.side[data-more-above] {
+  --fade-top: 28px;
+}
+.side[data-more-below] {
+  --fade-bottom: 64px;
 }
 .sched {
   flex: 1 1 380px;

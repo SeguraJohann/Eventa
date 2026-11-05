@@ -8,6 +8,7 @@ import { useItemActions } from "@/features/items/hooks/useItemActions";
 import { useEntryHandlers } from "@/features/day/useEntryHandlers";
 import { pathTitles } from "@/lib/tree/tree";
 import { relativeDate } from "@/lib/date/format";
+import { useScrollEdges } from "@/lib/utils/useScrollEdges";
 import { AddIcon } from "@/components/icons";
 import { ColorDot } from "@/components/ui/misc";
 import { fmt, useT } from "@/i18n";
@@ -34,10 +35,16 @@ export function DayView({ date, entries, showOverdue, leftTop, hint, fit }: Prop
   const { open } = useModals();
   const handlers = useEntryHandlers();
   const { untimed, timed } = useMemo(() => splitDay(entries), [entries]);
+  const { ref: sideRef, edges } = useScrollEdges<HTMLDivElement>();
 
   return (
     <div className={fit ? styles.fit : "cols"}>
-      <div className={fit ? `stack ${styles.side}` : "stack"}>
+      <div
+        ref={sideRef}
+        className={fit ? `stack ${styles.side}` : "stack"}
+        data-more-above={fit && edges.above ? "" : undefined}
+        data-more-below={fit && edges.below ? "" : undefined}
+      >
         {leftTop}
         {showOverdue && <OverdueCard />}
         <section className="card" style={{ padding: "12px 6px" }}>
